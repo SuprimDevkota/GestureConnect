@@ -17,8 +17,13 @@ const LandingPage = () => {
         </div>
 
         <div className="flex flex-col text-lg md:text-xl">
-          Use our AI-powered Assistant to <br /> Bridge the Communication Gap
-          <button className="flex flex-row justify-center items-center gap-2 mt-5 px-5 py-3 w-18 text-white font-bold tracking-wide rounded-full bg-[#11253e] hover:bg-blue-700">
+          <div>
+            Use our<span className="font-medium"> AI-powered Assistant </span>to
+            <br />
+            <span className="font-medium"> Bridge the Communication Gap</span>
+          </div>
+
+          <button className="flex flex-row justify-center items-center gap-2 mt-5 px-5 py-3 w-18 text-white font-bold tracking-wide rounded-full bg-[#11253e] hover:bg-gray-900">
             Get Started <MdArrowForwardIos />
           </button>
         </div>
