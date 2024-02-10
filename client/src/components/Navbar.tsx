@@ -1,4 +1,5 @@
 import { MdArrowForwardIos } from "react-icons/md";
+import { Link } from "react-router-dom";
 
 const Navbar = () => {
   return (
@@ -11,9 +12,11 @@ const Navbar = () => {
           </span>
         </a>
 
-        <button className="flex flex-row justify-center items-center gap-2 px-5 py-3 w-18 font-bold tracking-wide rounded-full bg-blue-600 hover:bg-blue-700">
-          Log In <MdArrowForwardIos />
-        </button>
+        <Link to="/login">
+          <button className="flex flex-row justify-center items-center gap-2 px-5 py-3 w-18 font-bold tracking-wide rounded-full bg-blue-600 hover:bg-blue-700">
+            Log In <MdArrowForwardIos />
+          </button>
+        </Link>
       </div>
     </nav>
   );

@@ -18,7 +18,6 @@ const SignupForm = () => {
   };
 
   return (
-    // <div className="flex flex-col md:flex-row px-16 py-8 md:py-16 items-center text-center justify-center">
     <div className="max-w-screen-xl mx-auto px-16 md:px-36 py-12 grid grid-cols-1 md:grid-cols-4 gap-16 text-center md:text-left">
       <div className="md:col-span-2 pt-8">
         <img
