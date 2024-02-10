@@ -16,4 +16,6 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
   </Provider>,
 );
 
-store.subscribe(() => console.log(store.getState()));
+if (import.meta.env.DEV) {
+  store.subscribe(() => console.log(store.getState()));
+}
