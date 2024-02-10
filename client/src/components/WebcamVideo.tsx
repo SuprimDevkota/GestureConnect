@@ -1,4 +1,4 @@
-import Notification from "./Notification";
+import StickyNotification from "./StickyNotification";
 import { INotification } from "../types/notification";
 
 import Webcam from "react-webcam";
@@ -60,11 +60,9 @@ const WebcamStreamCapture: React.FC<WebcamStreamCaptureProps> = ({
   const onUserMediaError = useCallback(() => {
     setIsCapturing(false);
 
-    console.log("onUserMediaError");
-
     const notification: INotification = {
       message:
-        "Webcam access was denied. Please allow camera access to use this feature.",
+        "Webcam access was denied. Please allow camera access to use GestureConnect.",
       type: "error",
     };
 
@@ -73,7 +71,7 @@ const WebcamStreamCapture: React.FC<WebcamStreamCaptureProps> = ({
 
   return (
     <>
-      {notification && <Notification _notification={notification} />}
+      {notification && <StickyNotification notification={notification} />}
 
       <Webcam
         audio={false}
