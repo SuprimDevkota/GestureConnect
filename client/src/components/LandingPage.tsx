@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import { MdArrowForwardIos } from "react-icons/md";
 
 const LandingPage = () => {
@@ -23,9 +24,11 @@ const LandingPage = () => {
             <span className="font-medium"> Bridge the Communication Gap</span>
           </div>
 
-          <button className="flex flex-row justify-center items-center gap-2 mt-5 px-5 py-3 w-18 text-white font-bold tracking-wide rounded-full bg-[#11253e] hover:bg-gray-900">
-            Get Started <MdArrowForwardIos />
-          </button>
+          <Link to="/signup">
+            <button className="flex flex-row justify-center items-center gap-2 mt-5 px-5 py-3 w-18 text-white font-bold tracking-wide rounded-full bg-[#11253e] hover:bg-gray-900">
+              Get Started <MdArrowForwardIos />
+            </button>
+          </Link>
         </div>
       </div>
     </div>
