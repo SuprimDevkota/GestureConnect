@@ -1,9 +1,13 @@
+import { useAppSelector } from "../hooks";
+
 import { Link } from "react-router-dom";
 import { FcGoogle } from "react-icons/fc";
 
 import { useState } from "react";
 
 const SignupForm = () => {
+  const notification = useAppSelector((state) => state.notification);
+
   const [firstName, setFirstName] = useState<string>("");
   const [lastName, setLastName] = useState<string>("");
   const [email, setEmail] = useState<string>("");
@@ -18,7 +22,9 @@ const SignupForm = () => {
   };
 
   return (
-    <div className="max-w-screen-xl mx-auto px-16 md:px-36 py-12 grid grid-cols-1 md:grid-cols-4 gap-16 text-center md:text-left">
+    <div
+      className={`max-w-screen-xl mx-auto px-16 md:px-36 ${notification ? "py-3 md:py-5" : "py-12"} grid grid-cols-1 md:grid-cols-4 gap-16 text-center md:text-left`}
+    >
       <div className="md:col-span-2 pt-8">
         <img
           src="/logo.png"

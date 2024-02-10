@@ -1,9 +1,14 @@
 import { Link } from "react-router-dom";
 import { MdArrowForwardIos } from "react-icons/md";
+import { useAppSelector } from "../hooks";
 
 const LandingPage = () => {
+  const notification = useAppSelector((state) => state.notification);
+
   return (
-    <div className="flex flex-col md:flex-row px-16 py-8 md:py-16 items-center text-center justify-center">
+    <div
+      className={`flex flex-col md:flex-row px-16 ${notification ? "py-3 md:py-5" : "py-8 md:py-16"} items-center text-center justify-center`}
+    >
       <img
         src="/landing_page.png"
         alt="GestureConnect Landing Page Image"

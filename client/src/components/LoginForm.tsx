@@ -1,21 +1,55 @@
+import userService from "../services/user";
+
+import { setUser } from "../reducers/loggedUserReducer";
+import { setNotification } from "../reducers/notificationReducer";
+
+import { useAppDispatch, useAppSelector } from "../hooks";
+import { INotification } from "../types/notification";
+
 import { FcGoogle } from "react-icons/fc";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 import { useState } from "react";
 
 const LoginForm = () => {
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
+
+  const notification = useAppSelector((state) => state.notification);
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    alert("Login form submitted");
+    const user = {
+      token: "1234567890",
+      firstName: "John",
+      lastName: "Doe",
+      email,
+    };
+
+    const notification: INotification = {
+      message: "User successfully logged in!",
+      type: "success",
+    };
+
+    userService.setUser(user);
+    dispatch(setUser(user));
+    dispatch(setNotification(notification));
+
+    setEmail("");
+    setPassword("");
+
+    navigate("/");
   };
 
   return (
-    <div className="max-w-screen-xl mx-auto px-16 md:px-36 py-12 grid grid-cols-1 md:grid-cols-4 gap-16 text-center md:text-left">
+    <div
+      className={`max-w-screen-xl mx-auto px-16 md:px-36 ${notification ? "py-3 md:py-5" : "py-12"} grid grid-cols-1 md:grid-cols-4 gap-16 text-center md:text-left`}
+    >
       <div className="md:col-span-2 pt-2">
         <img
           src="/logo.png"
@@ -41,7 +75,7 @@ const LoginForm = () => {
           </Link>
         </p>
 
-        <form className="max-w-" onSubmit={handleSubmit}>
+        <form onSubmit={handleLogin}>
           <div className="relative z-0 w-full mb-5 group">
             <input
               type="email"
