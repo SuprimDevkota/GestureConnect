@@ -45,7 +45,7 @@ class UserLoginView(APIView):
         user_info = UserProfileSerializer(user)
         return Response({'token':token, 'info':user_info.data}, status=status.HTTP_200_OK)
     else:
-        Response({'errors':{'non_field_errors':['Email or Password is not Valid']}}, status=status.HTTP_404_NOT_FOUND)
+        return Response({'errors':{'non_field_errors':['Email or Password is not Valid']}}, status=status.HTTP_404_NOT_FOUND)
 
 # View for User Profile.
 class UserProfileView(APIView):
