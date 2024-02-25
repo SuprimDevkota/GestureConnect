@@ -1,10 +1,13 @@
 import userService from "../services/user";
+import loginService from "../services/login";
 
 import { setUser } from "../reducers/loggedUserReducer";
 import { setNotification } from "../reducers/notificationReducer";
 
 import { useAppDispatch, useAppSelector } from "../hooks";
 import { INotification } from "../types/notification";
+
+import { AxiosError } from "axios";
 
 import { FcGoogle } from "react-icons/fc";
 import { Link, useNavigate } from "react-router-dom";
@@ -17,33 +20,64 @@ const LoginForm = () => {
 
   const notification = useAppSelector((state) => state.notification);
 
-  const [email, setEmail] = useState("");
+  const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
 
   const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    const user = {
-      token: "1234567890",
-      firstName: "John",
-      lastName: "Doe",
-      email,
-    };
+    try {
+      const user = await loginService.login({ username, password });
 
-    const notification: INotification = {
-      message: "User successfully logged in!",
-      type: "success",
-    };
+      const notification: INotification = {
+        message: "User successfully logged in!",
+        type: "success",
+      };
 
-    userService.setUser(user);
-    dispatch(setUser(user));
-    dispatch(setNotification(notification));
+      userService.setUser(user);
+      dispatch(setUser(user));
 
-    setEmail("");
-    setPassword("");
+      dispatch(setNotification(notification));
 
-    navigate("/");
+      setUsername("");
+      setPassword("");
+
+      navigate("/");
+    } catch (e: unknown) {
+      const err = e as AxiosError;
+
+      if (err.response && err.response.status === 500) {
+        const notification: INotification = {
+          message: "Failed to connect to the server.",
+          type: "error",
+        };
+
+        dispatch(setNotification(notification));
+
+        return;
+      }
+
+      if (err.response && err.response.data) {
+        // The request was made and the server responded with a status code
+        // that falls out of the range of 2xx (and the server sends error message)
+        const notification: INotification = {
+          message: Object.values(err.response.data.errors)[0] as string,
+          type: "error",
+        };
+
+        dispatch(setNotification(notification));
+
+        return;
+      }
+
+      const notification: INotification = {
+        message: "Failed to connect to the server.",
+        type: "error",
+      };
+
+      dispatch(setNotification(notification));
+    }
   };
 
   return (
@@ -78,20 +112,20 @@ const LoginForm = () => {
         <form onSubmit={handleLogin}>
           <div className="relative z-0 w-full mb-5 group">
             <input
-              type="email"
-              name="email"
-              id="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
+              type="text"
+              name="username"
+              id="username"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
               className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
               placeholder=" "
               required
             />
             <label
-              htmlFor="email"
+              htmlFor="username"
               className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
             >
-              Email address
+              Username
             </label>
           </div>
 
