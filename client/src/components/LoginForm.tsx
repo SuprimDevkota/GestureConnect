@@ -1,10 +1,13 @@
 import userService from "../services/user";
+import loginService from "../services/login";
 
 import { setUser } from "../reducers/loggedUserReducer";
 import { setNotification } from "../reducers/notificationReducer";
 
 import { useAppDispatch, useAppSelector } from "../hooks";
 import { INotification } from "../types/notification";
+
+import { AxiosError } from "axios";
 
 import { FcGoogle } from "react-icons/fc";
 import { Link, useNavigate } from "react-router-dom";
@@ -24,26 +27,57 @@ const LoginForm = () => {
   const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    const user = {
-      token: "1234567890",
-      firstName: "John",
-      lastName: "Doe",
-      username,
-    };
+    try {
+      const user = await loginService.login({ username, password });
 
-    const notification: INotification = {
-      message: "User successfully logged in!",
-      type: "success",
-    };
+      const notification: INotification = {
+        message: "User successfully logged in!",
+        type: "success",
+      };
 
-    userService.setUser(user);
-    dispatch(setUser(user));
-    dispatch(setNotification(notification));
+      userService.setUser(user);
+      dispatch(setUser(user));
 
-    setUsername("");
-    setPassword("");
+      dispatch(setNotification(notification));
 
-    navigate("/");
+      setUsername("");
+      setPassword("");
+
+      navigate("/");
+    } catch (e: unknown) {
+      const err = e as AxiosError;
+
+      if (err.response && err.response.status === 500) {
+        const notification: INotification = {
+          message: "Failed to connect to the server.",
+          type: "error",
+        };
+
+        dispatch(setNotification(notification));
+
+        return;
+      }
+
+      if (err.response && err.response.data) {
+        // The request was made and the server responded with a status code
+        // that falls out of the range of 2xx (and the server sends error message)
+        const notification: INotification = {
+          message: Object.values(err.response.data.errors)[0] as string,
+          type: "error",
+        };
+
+        dispatch(setNotification(notification));
+
+        return;
+      }
+
+      const notification: INotification = {
+        message: "Failed to connect to the server.",
+        type: "error",
+      };
+
+      dispatch(setNotification(notification));
+    }
   };
 
   return (

@@ -1,11 +1,19 @@
-import { useAppSelector } from "../hooks";
+import { useAppDispatch, useAppSelector } from "../hooks";
+import { INotification } from "../types/notification";
+import { setNotification } from "../reducers/notificationReducer";
+import signUpService from "../services/signup";
 
-import { Link } from "react-router-dom";
+import { AxiosError } from "axios";
+
+import { Link, useNavigate } from "react-router-dom";
 import { FcGoogle } from "react-icons/fc";
 
 import { useState } from "react";
 
 const SignupForm = () => {
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
+
   const notification = useAppSelector((state) => state.notification);
 
   const [firstName, setFirstName] = useState<string>("");
@@ -18,7 +26,74 @@ const SignupForm = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log("Sign up form submitted");
+
+    if (password !== confirmPassword) {
+      const notification: INotification = {
+        message: "Passwords do not match.",
+        type: "error",
+      };
+
+      dispatch(setNotification(notification));
+
+      return;
+    }
+
+    try {
+      await signUpService.signup({
+        firstName,
+        lastName,
+        username,
+        password,
+      });
+
+      setFirstName("");
+      setLastName("");
+      setUsername("");
+      setPassword("");
+      setConfirmPassword("");
+
+      const notification: INotification = {
+        message: "Registration successful, please login.",
+        type: "success",
+      };
+
+      dispatch(setNotification(notification));
+
+      navigate("/login");
+    } catch (e: unknown) {
+      const err = e as AxiosError;
+
+      if (err.response && err.response.status === 500) {
+        const notification: INotification = {
+          message: "Failed to connect to the server.",
+          type: "error",
+        };
+
+        dispatch(setNotification(notification));
+
+        return;
+      }
+
+      if (err.response && err.response.data) {
+        // The request was made and the server responded with a status code
+        // that falls out of the range of 2xx (and the server sends error message)
+        const notification: INotification = {
+          message: Object.values(err.response.data.errors)[0] as string,
+          type: "error",
+        };
+
+        dispatch(setNotification(notification));
+
+        return;
+      }
+
+      const notification: INotification = {
+        message: "Failed to connect to the server.",
+        type: "error",
+      };
+
+      dispatch(setNotification(notification));
+    }
   };
 
   return (

@@ -1,6 +1,12 @@
 export interface IUser {
-  firstName: string;
-  lastName: string;
-  username: string;
-  token: string;
+  token: {
+    refresh: string;
+    access: string;
+  };
+  info: {
+    id: number;
+    username: string;
+    firstName: string;
+    lastName: string;
+  };
 }
