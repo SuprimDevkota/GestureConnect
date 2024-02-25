@@ -9,17 +9,17 @@ const Notification: React.FC<INotificationProps> = ({ notification }) => {
     return null;
   }
 
-  let color: string = "green";
-
-  if (notification.type === "error") {
-    color = "red";
-  } else if (notification.type === "info") {
-    color = "blue";
-  }
+  const colorClasses: { [key: string]: string } = {
+    error:
+      "text-red-800 border-red-300 bg-red-50 dark:bg-gray-800 dark:text-red-400 dark:border-red-800",
+    info: "text-blue-800 border-blue-300 bg-blue-50 dark:bg-gray-800 dark:text-blue-400 dark:border-blue-800",
+    default:
+      "text-green-800 border-green-300 bg-green-50 dark:bg-gray-800 dark:text-green-400 dark:border-green-800",
+  };
 
   return (
     <div
-      className={`flex items-center px-4 mx-4 md:mx-32 lg:mx-16 xl:mx-5 p-4 text-${color}-800 border border-${color}-300 rounded-lg bg-${color}-50 dark:bg-gray-800 dark:text-${color}-400 dark:border-${color}-800`}
+      className={`flex items-center px-4 mx-4 md:mx-32 lg:mx-48 mt-4 md:mt-4 p-4 rounded-lg ${colorClasses[notification.type] || colorClasses.default}`}
       role="alert"
     >
       <svg
