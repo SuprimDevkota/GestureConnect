@@ -24,7 +24,7 @@ export const setNotification = (
     dispatch(showNotification(notification));
     clearTimeout(timeoutId);
 
-    timeoutId = setTimeout(() => {
+    timeoutId = window.setTimeout(() => {
       dispatch(showNotification(null));
     }, timeoutInSeconds * 1000);
   };
