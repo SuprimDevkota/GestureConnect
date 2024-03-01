@@ -1,0 +1,21 @@
+databases:
+  - name: gestureconnectdb
+    plan: free
+    databaseName: gestureconnect
+    user: gestureconnect
+
+services:
+  - type: web
+    plan: free
+    name: gestureconnect
+    runtime: python
+    buildCommand: "./build.sh"
+    startCommand: "python -m gunicorn gestureconnect.asgi:application -k uvicorn.workers.UvicornWorker"    envVars:
+      - key: DATABASE_URL
+        fromDatabase:
+          name: gestureconnectdb
+          property: connectionString
+      - key: SECRET_KEY
+        generateValue: true
+      - key: WEB_CONCURRENCY
+        value: 4
