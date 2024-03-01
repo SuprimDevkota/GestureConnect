@@ -6,7 +6,7 @@ const STORAGE_KEY = "loggedGestureConnectUser";
 
 const setUser = (user: IUser) => {
   localStorage.setItem(STORAGE_KEY, JSON.stringify(user));
-  token = user.token;
+  token = user.token.access;
 };
 
 const getUser = () => {

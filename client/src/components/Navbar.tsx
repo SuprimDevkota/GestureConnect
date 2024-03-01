@@ -30,7 +30,7 @@ const Navbar = () => {
 
     dispatch(
       setNotification({
-        message: `User ${loggedUser.firstName} logged out.`,
+        message: `User ${loggedUser.info.firstName} logged out.`,
         type: "info",
       }),
     );
