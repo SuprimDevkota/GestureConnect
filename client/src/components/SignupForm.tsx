@@ -1,7 +1,9 @@
 import { useAppDispatch, useAppSelector } from "../hooks";
-import { INotification } from "../types/notification";
 import { setNotification } from "../reducers/notificationReducer";
 import signUpService from "../services/signup";
+
+import { INotification } from "../types/notification";
+import { IErrorResponse } from "../types/errorResponse";
 
 import { AxiosError } from "axios";
 
@@ -75,10 +77,12 @@ const SignupForm = () => {
       }
 
       if (err.response && err.response.data) {
+        const data = err.response.data as IErrorResponse;
+
         // The request was made and the server responded with a status code
         // that falls out of the range of 2xx (and the server sends error message)
         const notification: INotification = {
-          message: Object.values(err.response.data.errors)[0] as string,
+          message: Object.values(data.errors)[0][0] as string,
           type: "error",
         };
 

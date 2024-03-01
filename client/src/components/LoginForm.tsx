@@ -13,6 +13,7 @@ import { FcGoogle } from "react-icons/fc";
 import { Link, useNavigate } from "react-router-dom";
 
 import { useState } from "react";
+import { IErrorResponse } from "../types/errorResponse";
 
 const LoginForm = () => {
   const dispatch = useAppDispatch();
@@ -59,10 +60,12 @@ const LoginForm = () => {
       }
 
       if (err.response && err.response.data) {
+        const data = err.response.data as IErrorResponse;
+
         // The request was made and the server responded with a status code
         // that falls out of the range of 2xx (and the server sends error message)
         const notification: INotification = {
-          message: Object.values(err.response.data.errors)[0] as string,
+          message: Object.values(data.errors)[0][0] as string,
           type: "error",
         };
 
