@@ -5,6 +5,8 @@ import react from "@vitejs/plugin-react";
 export default defineConfig(({ mode }) => {
   process.env = loadEnv(mode, process.cwd(), "");
 
+  console.log("process.env", process.env)
+
   return {
     server: {
       proxy: {
