@@ -15,7 +15,6 @@ const WebcamStreamCapture: React.FC<WebcamStreamCaptureProps> = ({
 }) => {
   const webcamRef = useRef<Webcam>(null);
   const mediaRecorderRef = useRef<MediaRecorder | null>(null);
-  const [recordedChunks, setRecordedChunks] = useState<Blob[]>([]);
 
   const [notification, setNotification] = useState<INotification | null>(null);
 
@@ -45,12 +44,8 @@ const WebcamStreamCapture: React.FC<WebcamStreamCaptureProps> = ({
       return;
     }
 
-    mediaRecorderRef.current.addEventListener(
-      "dataavailable",
-      handleDataAvailable,
-    );
     mediaRecorderRef.current.start();
-  }, [handleDataAvailable, setIsCapturing]);
+  }, [setIsCapturing]);
 
   // This is called when the media stream is successfully loaded
   const onUserMedia = useCallback(() => {
