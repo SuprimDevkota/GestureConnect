@@ -6,13 +6,9 @@ import { useRef, useState, useCallback } from "react";
 
 interface WebcamStreamCaptureProps {
   setIsCapturing: React.Dispatch<React.SetStateAction<boolean>>;
-  isCapturing: boolean;
 }
 
-const WebcamStreamCapture: React.FC<WebcamStreamCaptureProps> = ({
-  setIsCapturing,
-  isCapturing,
-}) => {
+const WebcamStreamCapture = () => {
   const webcamRef = useRef<Webcam>(null);
   const mediaRecorderRef = useRef<MediaRecorder | null>(null);
 
@@ -75,11 +71,6 @@ const WebcamStreamCapture: React.FC<WebcamStreamCaptureProps> = ({
         onUserMediaError={onUserMediaError} // Handle errors, including permission denied
       />
 
-      {isCapturing && (
-        <div className="flex items-center justify-center mt-4 px-3 py-2 border-2 rounded-md w-full hover:bg-gray-100 dark:hover:bg-gray-800 focus:outline-none focus:ring-4 focus:ring-blue-300 dark:focus:ring-blue-800 text-gray-700 dark:text-gray-300 border-gray-300 dark:border-gray-600 hover:border-gray-400 dark:hover:border-gray-700 focus:border-blue-500 dark:focus:border-blue-600 font-medium">
-          How you doin'? 🤔
-        </div>
-      )}
     </>
   );
 };
