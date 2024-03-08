@@ -7,7 +7,7 @@ const Home = () => {
 
   return (
     <div
-      className={`flex flex-col justify-center mx-auto max-w-screen-lg ${isCapturing ? "w-[85%] sm:w-[70%] md:w-[55%] lg:w-[39%]" : ""} py-5`}
+      className={`flex flex-col justify-center mx-auto max-w-screen-lg ${isCapturing ? "w-[85%] sm:w-[70%] md:w-[55%] lg:w-[39%]" : ""} py-4`}
     >
       <WebcamStreamCapture setIsCapturing={setIsCapturing} />
     </div>
