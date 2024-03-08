@@ -3,13 +3,13 @@ import WebcamStreamCapture from "./WebcamVideo";
 import { useState } from "react";
 
 const Home = () => {
-  const [isCapturing, setIsCapturing] = useState(false);
+  const [isCapturing, setIsCapturing] = useState<boolean>(false);
 
   return (
     <div
-      className={`flex flex-col justify-center mx-auto max-w-screen-lg ${isCapturing ? "w-[80%] sm:w-[65%] md:w-[50%] lg:w-[35%]" : ""} py-12`}
+      className={`flex flex-col justify-center mx-auto max-w-screen-lg ${isCapturing ? "w-[85%] sm:w-[70%] md:w-[55%] lg:w-[39%]" : ""} py-5`}
     >
-      <WebcamStreamCapture />
+      <WebcamStreamCapture setIsCapturing={setIsCapturing} />
     </div>
   );
 };
