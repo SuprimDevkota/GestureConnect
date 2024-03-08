@@ -8,7 +8,6 @@ import { IErrorResponse } from "../types/errorResponse";
 import { AxiosError } from "axios";
 
 import { Link, useNavigate } from "react-router-dom";
-import { FcGoogle } from "react-icons/fc";
 
 import { useState } from "react";
 
@@ -256,11 +255,6 @@ const SignupForm = () => {
           <span className="text-gray-500 dark:text-gray-400 px-4">OR</span>
           <span className="h-px bg-gray-300 w-full"></span>
         </div>
-
-        <button className="flex items-center justify-center mt-4 px-3 py-2 border-2 rounded-md w-full hover:bg-gray-100 dark:hover:bg-gray-800 focus:outline-none focus:ring-4 focus:ring-blue-300 dark:focus:ring-blue-800 text-gray-700 dark:text-gray-300 border-gray-300 dark:border-gray-600 hover:border-gray-400 dark:hover:border-gray-700 focus:border-blue-500 dark:focus:border-blue-600 font-medium">
-          <FcGoogle className="w-6 h-6 me-2" />
-          Sign up with Google
-        </button>
       </div>
     </div>
   );
