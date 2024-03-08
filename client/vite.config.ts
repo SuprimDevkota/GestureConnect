@@ -9,7 +9,7 @@ export default defineConfig(({ mode }) => {
     server: {
       proxy: {
         "/api": process.env.DEV
-          ? "http://localhost:8000"
+          ? "http://127.0.0.1:8000"
           : "https://gestureconnect-aqiz.onrender.com",
       },
     },
