@@ -249,12 +249,6 @@ const SignupForm = () => {
             Sign Up
           </button>
         </form>
-
-        <div className="flex items-center justify-center mt-4">
-          <span className="h-px bg-gray-300 w-full"></span>
-          <span className="text-gray-500 dark:text-gray-400 px-4">OR</span>
-          <span className="h-px bg-gray-300 w-full"></span>
-        </div>
       </div>
     </div>
   );
