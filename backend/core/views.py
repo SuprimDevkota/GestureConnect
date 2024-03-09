@@ -63,7 +63,7 @@ class UserProfileView(APIView):
 @csrf_exempt
 def opencam(request):
     # Your subprocess call remains the same
-    subprocess.run(['python3', 'core/detect.py', '--weights', 'core/best.pt', '--source', '0'])
+    subprocess.run(['python3', 'yolo/detect.py', '--weights', 'yolo/best.pt', '--source', '0'])
 
     # Return using DRF's Response object
     return Response({'message': 'Camera Opened'}, status=status.HTTP_200_OK)
