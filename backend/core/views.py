@@ -1,3 +1,7 @@
+import subprocess
+
+from django.views.decorators.csrf import csrf_exempt
+from rest_framework.decorators import api_view
 from django.contrib.auth import authenticate
 from rest_framework.views import APIView
 from rest_framework_simplejwt.tokens import RefreshToken
@@ -53,4 +57,13 @@ class UserProfileView(APIView):
     def get(self, request, format=None):
         serializer = UserProfileSerializer(request.user)
         return Response(serializer.data, status=status.HTTP_200_OK)
-    
+
+
+@api_view(['POST'])  # Specify the HTTP methods this view should handle
+@csrf_exempt
+def opencam(request):
+    # Your subprocess call remains the same
+    subprocess.run(['python3', 'yolo/detect.py', '--weights', 'yolo/best.pt', '--source', '0'])
+
+    # Return using DRF's Response object
+    return Response({'message': 'Camera Opened'}, status=status.HTTP_200_OK)

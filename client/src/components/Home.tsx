@@ -1,15 +1,24 @@
-import WebcamStreamCapture from "./WebcamVideo";
-
-import { useState } from "react";
+import axios from "axios";
+import { useEffect } from "react";
 
 const Home = () => {
-  const [isCapturing, setIsCapturing] = useState<boolean>(false);
+  useEffect(() => {
+    const sendRequest = async () => {
+      // send request to api/opencam
+      const response = await axios.post("/api/opencam/", {
+        msg: "Open the camera",
+      });
+      console.log(response.data);
+    };
+
+    sendRequest();
+  }, []);
 
   return (
     <div
-      className={`flex flex-col justify-center mx-auto max-w-screen-lg ${isCapturing ? "w-[85%] sm:w-[70%] md:w-[55%] lg:w-[39%]" : ""} py-4`}
+      className={`flex flex-col justify-center mx-auto max-w-screen-lg py-4`}
     >
-      <WebcamStreamCapture setIsCapturing={setIsCapturing} />
+      Welcome to GestureConnect
     </div>
   );
 };
